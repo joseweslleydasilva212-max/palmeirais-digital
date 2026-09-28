@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Mapa | Saneamento Digital Palmeirais</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Leaflet -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="container nav-container">
+
+        <a href="index.html" class="logo">
+            <span class="logo-icon">💧</span>
+
+            <span>
+                Saneamento Digital
+                <strong>Palmeirais</strong>
+            </span>
+        </a>
+
+        <button class="menu-btn" id="menuBtn">☰</button>
+
+        <nav id="nav">
+
+            <a href="index.html">Início</a>
+            <a href="problema.html">Problema</a>
+            <a class="active" href="mapa.html">Mapa</a>
+            <a href="relatar.html">Relatar Problema</a>
+            <a href="agua.html">Água</a>
+            <a href="esgoto.html">Esgoto</a>
+            <a href="painel.html">Painel</a>
+            <a href="sobre.html">Sobre</a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main>
+
+<section class="page-header">
+
+    <div class="container">
+
+        <span class="tag">🗺️ Mapa da cidade</span>
+
+        <h1>
+            Mapeamento de problemas
+        </h1>
+
+        <p>
+            Visualize os pontos registrados no sistema.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="map-layout">
+
+            <div class="map-wrapper">
+
+                <div id="map"></div>
+
+            </div>
+
+
+            <div class="map-sidebar">
+
+                <h2>Legenda</h2>
+
+                <div class="legend">
+                    <span class="dot red"></span>
+                    Falta de água
+                </div>
+
+                <div class="legend">
+                    <span class="dot orange"></span>
+                    Problemas de esgoto
+                </div>
+
+                <div class="legend">
+                    <span class="dot yellow"></span>
+                    Necessidade de saneamento
+                </div>
+
+                <div class="legend">
+                    <span class="dot green"></span>
+                    Áreas atendidas
+                </div>
+
+
+                <div class="notice">
+
+                    <strong>⚠️ Importante</strong>
+
+                    <p>
+                        Os pontos apresentados nesta versão são
+                        demonstrativos. Dados reais deverão ser
+                        preenchidos pela comunidade ou pelo
+                        poder público.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+    <div class="copyright">
+        © 2026 Saneamento Digital Palmeirais
+    </div>
+
+</footer>
+
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

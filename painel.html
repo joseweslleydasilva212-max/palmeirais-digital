@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Painel Administrativo | Saneamento Digital Palmeirais</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- LOGIN -->
+    <section id="loginADM" class="login-adm">
+
+        <div class="login-caixa">
+
+            <div class="login-logo">
+                💧
+            </div>
+
+            <h1>Área Administrativa</h1>
+
+            <p>
+                Acesso exclusivo para funcionários autorizados
+                da Prefeitura.
+            </p>
+
+            <form id="formLogin">
+
+                <label for="usuario">
+                    Usuário
+                </label>
+
+                <input
+                    type="text"
+                    id="usuario"
+                    placeholder="Digite seu usuário"
+                    required
+                >
+
+                <label for="senha">
+                    Senha
+                </label>
+
+                <input
+                    type="password"
+                    id="senha"
+                    placeholder="Digite sua senha"
+                    required
+                >
+
+                <button type="submit">
+                    Entrar no painel
+                </button>
+
+                <p id="erroLogin" class="erro-login"></p>
+
+            </form>
+
+            <a href="index.html" class="voltar-site">
+                ← Voltar para o site
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- PAINEL -->
+    <section id="painelADM" class="painel-adm" style="display: none;">
+
+        <header class="adm-header">
+
+            <div>
+                <h1>⚙️ Painel Administrativo</h1>
+
+                <p>
+                    Saneamento Digital Palmeirais
+                </p>
+            </div>
+
+            <button onclick="sairADM()" class="btn-sair">
+                Sair
+            </button>
+
+        </header>
+
+
+        <main class="adm-conteudo">
+
+            <div class="adm-titulo">
+
+                <div>
+                    <span>ÁREA DA PREFEITURA</span>
+
+                    <h2>
+                        Denúncias e solicitações
+                    </h2>
+
+                    <p>
+                        Acompanhe os problemas registrados
+                        pela população.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- CARDS -->
+
+            <div class="cards-adm">
+
+                <div class="card-adm">
+                    <span>📋</span>
+                    <p>Problemas registrados</p>
+                    <strong id="totalDenuncias">0</strong>
+                </div>
+
+                <div class="card-adm">
+                    <span>🚰</span>
+                    <p>Falta de água</p>
+                    <strong id="totalAgua">0</strong>
+                </div>
+
+                <div class="card-adm">
+                    <span>🚽</span>
+                    <p>Problemas de esgoto</p>
+                    <strong id="totalEsgoto">0</strong>
+                </div>
+
+                <div class="card-adm">
+                    <span>✅</span>
+                    <p>Resolvidos</p>
+                    <strong id="totalResolvidos">0</strong>
+                </div>
+
+            </div>
+
+
+            <!-- FILTROS -->
+
+            <div class="filtros-adm">
+
+                <input
+                    type="text"
+                    id="buscarDenuncia"
+                    placeholder="🔎 Buscar por bairro..."
+                >
+
+                <select id="filtroTipo">
+
+                    <option value="todos">
+                        Todos os problemas
+                    </option>
+
+                    <option value="Falta de água">
+                        Falta de água
+                    </option>
+
+                    <option value="Falta de rede de esgoto">
+                        Falta de rede de esgoto
+                    </option>
+
+                    <option value="Esgoto a céu aberto">
+                        Esgoto a céu aberto
+                    </option>
+
+                    <option value="Vazamento">
+                        Vazamento
+                    </option>
+
+                    <option value="Outro">
+                        Outro
+                    </option>
+
+                </select>
+
+                <button type="button" class="btn-limpar-todos" id="btnLimparTodos">
+                    Limpar registros
+                </button>
+
+            </div>
+
+
+            <!-- TABELA -->
+
+            <div class="tabela-container">
+
+                <h3>
+                    Denúncias registradas
+                </h3>
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Data</th>
+                            <th>Local</th>
+                            <th>Problema</th>
+                            <th>Descrição</th>
+                            <th>Status</th>
+                            <th>Ação</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="listaDenuncias">
+
+                        <!-- JavaScript colocará as denúncias aqui -->
+
+                    </tbody>
+
+                </table>
+
+                <div id="semDenuncias" class="sem-denuncias">
+
+                    Nenhuma denúncia registrada.
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </section>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

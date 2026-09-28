@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Relatar Problema | Saneamento Digital</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="container nav-container">
+
+        <a href="index.html" class="logo">
+
+            <span class="logo-icon">💧</span>
+
+            <span>
+                Saneamento Digital
+                <strong>Palmeirais</strong>
+            </span>
+
+        </a>
+
+        <button class="menu-btn" id="menuBtn">☰</button>
+
+        <nav id="nav">
+
+            <a href="index.html">Início</a>
+            <a href="problema.html">Problema</a>
+            <a href="mapa.html">Mapa</a>
+            <a class="active" href="relatar.html">
+                Relatar Problema
+            </a>
+            <a href="agua.html">Água</a>
+            <a href="esgoto.html">Esgoto</a>
+            <a href="painel.html">Painel</a>
+            <a href="sobre.html">Sobre</a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main>
+
+<section class="page-header">
+
+    <div class="container">
+
+        <span class="tag">📋 Participação</span>
+
+        <h1>
+            Relatar um problema
+        </h1>
+
+        <p>
+            Você encontrou um problema de saneamento?
+            Conte para nós.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="help-container">
+
+            <button
+                type="button"
+                class="help-button"
+                id="helpButton"
+                aria-expanded="false"
+            >
+                <span class="help-icon">?</span>
+                <span>Precisa de ajuda?</span>
+            </button>
+
+            <div class="help-panel" id="helpPanel" hidden>
+                <p>
+                    Não sabe como registrar um problema?
+                    Veja um exemplo.
+                </p>
+
+                <div class="help-example">
+                    <strong>Exemplo preenchido</strong>
+                    <ul>
+                        <li>Nome: Maria da Silva</li>
+                        <li>Rua: Avenida Principal</li>
+                        <li>Bairro: Centro</li>
+                        <li>Tipo: Vazamento</li>
+                        <li>Descrição: Há uma água vazando na rua desde ontem.</li>
+                    </ul>
+                </div>
+
+                <button type="button" class="btn btn-green btn-small" id="fillExampleBtn">
+                    Preencher exemplo
+                </button>
+            </div>
+        </div>
+
+        <div class="tutorial-video-box">
+            <div class="tutorial-video-header">
+                <span>🎥 Tutorial</span>
+                <strong>Como usar o formulário de relato</strong>
+            </div>
+
+            <video controls class="tutorial-video" preload="metadata">
+                <source src="videos/tutorial-relatar.mp4" type="video/mp4">
+                Seu navegador não suporta vídeos em HTML5.
+            </video>
+        </div>
+
+        <form id="formRelato">
+
+    <label for="nome">
+        Nome
+    </label>
+
+    <input
+        type="text"
+        id="nome"
+        placeholder="Seu nome"
+    >
+
+
+    <label for="local">
+        Rua
+    </label>
+
+    <input
+        type="text"
+        id="local"
+        placeholder="Ex: Rua das Flores"
+        required
+    >
+
+    <label for="bairro">
+        Bairro
+    </label>
+
+    <input
+        type="text"
+        id="bairro"
+        placeholder="Ex: Centro"
+        required
+    >
+
+
+    <label for="tipo">
+        Tipo de problema
+    </label>
+
+    <select id="tipo" required>
+
+        <option value="">
+            Selecione o problema
+        </option>
+
+        <option value="Falta de água">
+            Falta de água
+        </option>
+
+        <option value="Falta de rede de esgoto">
+            Falta de rede de esgoto
+        </option>
+
+        <option value="Esgoto a céu aberto">
+            Esgoto a céu aberto
+        </option>
+
+        <option value="Vazamento">
+            Vazamento
+        </option>
+
+        <option value="Outro">
+            Outro
+        </option>
+
+    </select>
+
+
+    <label for="descricao">
+        Descrição do problema
+    </label>
+
+    <textarea
+        id="descricao"
+        placeholder="Conte o que está acontecendo..."
+        required
+    ></textarea>
+
+
+    <label for="tempo">
+        Há quanto tempo acontece?
+    </label>
+
+    <input
+        type="text"
+        id="tempo"
+        placeholder="Ex: 1 semana"
+    >
+
+
+    <label for="foto">
+        Foto do local
+    </label>
+
+    <input
+        type="file"
+        id="foto"
+        accept="image/*"
+    >
+
+
+    <button type="submit">
+        Enviar relato →
+    </button>
+
+</form>
+
+<div id="sucessoRelato" class="sucesso-relato" hidden>
+    <div class="sucesso-circulo">
+        <div class="sucesso-circulo-interno">✓</div>
+    </div>
+
+    <h2>Sua mensagem foi enviada!</h2>
+
+    <p class="sucesso-texto-principal">
+        Obrigado por contribuir com o Saneamento Digital Palmeirais.
+        Sua informação é muito importante para melhorar o saneamento
+        em nossa cidade.
+    </p>
+
+    <div class="sucesso-info">
+        <span class="sucesso-info-icone">i</span>
+        <p>
+            O que acontece agora?<br>
+            Nossa equipe irá analisar sua mensagem e, se necessário,
+            entrará em contato para mais informações.
+        </p>
+    </div>
+
+    <button type="button" class="btn-sucesso-home" id="voltarHomeRelato">
+        🏠 Voltar para a página inicial
+    </button>
+</div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+    <div class="copyright">
+        © 2026 Saneamento Digital Palmeirais
+    </div>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
