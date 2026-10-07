@@ -419,6 +419,84 @@ function formatarNumero(valor) {
     return String(valor).padStart(2, "0");
 }
 
+function converterDataRelato(data) {
+    const partes = String(data || "").match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+    if (!partes) return null;
+
+    const dataConvertida = new Date(Number(partes[3]), Number(partes[2]) - 1, Number(partes[1]));
+    dataConvertida.setHours(0, 0, 0, 0);
+    return Number.isNaN(dataConvertida.getTime()) ? null : dataConvertida;
+}
+
+let aguaGraficoAnimacaoInicial = true;
+
+function renderizarGraficoAgua(relatos) {
+    const chart = document.getElementById("aguaChart");
+    if (!chart) return;
+
+    const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0);
+    const dias = Array.from({ length: 7 }, function(_, indice) {
+        const data = new Date(hoje);
+        data.setDate(hoje.getDate() - (6 - indice));
+        return data;
+    });
+    const contagens = dias.map(function(dia) {
+        return relatos.filter(function(relato) {
+            const dataRelato = converterDataRelato(relato.data);
+            return dataRelato && dataRelato.getTime() === dia.getTime();
+        }).length;
+    });
+    const assinaturaDados = dias.map(dia => dia.getTime()).join(",") + ":" + contagens.join(",");
+    if (chart.dataset.serieAgua === assinaturaDados) return;
+
+    const inicioX = 48;
+    const fimX = 690;
+    const topoY = 18;
+    const baseY = 184;
+    const maiorValor = Math.max(4, Math.ceil(Math.max(...contagens) / 4) * 4);
+    const pontos = contagens.map(function(valor, indice) {
+        return {
+            x: inicioX + (fimX - inicioX) * indice / 6,
+            y: baseY - valor / maiorValor * (baseY - topoY),
+            valor: valor
+        };
+    });
+    const linha = pontos.map(function(ponto, indice) {
+        return (indice === 0 ? "M" : "L") + ponto.x.toFixed(1) + " " + ponto.y.toFixed(1);
+    }).join(" ");
+    const area = linha + " L " + fimX + " " + baseY + " L " + inicioX + " " + baseY + " Z";
+    const linhasGrade = Array.from({ length: 5 }, function(_, indice) {
+        const valor = maiorValor * (4 - indice) / 4;
+        const y = topoY + (baseY - topoY) * indice / 4;
+        return '<line class="agua-chart-grid" x1="' + inicioX + '" y1="' + y + '" x2="' + fimX + '" y2="' + y + '"></line>' +
+            '<text class="agua-chart-axis" x="' + (inicioX - 10) + '" y="' + (y + 4) + '" text-anchor="end">' + valor + '</text>';
+    }).join("");
+    const marcacoesDia = dias.map(function(dia, indice) {
+        const x = pontos[indice].x;
+        const rotulo = new Intl.DateTimeFormat("pt-BR", { weekday: "short" }).format(dia).replace(".", "");
+        return '<line class="agua-chart-grid" x1="' + x + '" y1="' + topoY + '" x2="' + x + '" y2="' + baseY + '" opacity=".55"></line>' +
+            '<text class="agua-chart-axis" x="' + x + '" y="210" text-anchor="middle">' + rotulo + '</text>';
+    }).join("");
+    const marcadores = pontos.map(function(ponto, indice) {
+        return '<circle class="agua-chart-point" cx="' + ponto.x + '" cy="' + ponto.y + '" r="4"><title>' +
+            pontos[indice].valor + ' relato(s)</title></circle>';
+    }).join("");
+
+    const classeAnimacao = aguaGraficoAnimacaoInicial ? " agua-chart-series-animar" : "";
+    aguaGraficoAnimacaoInicial = false;
+
+    chart.innerHTML = '<defs><linearGradient id="aguaAreaFill" x1="0" x2="0" y1="0" y2="1">' +
+        '<stop offset="0%" stop-color="#1599f4" stop-opacity=".3"></stop>' +
+        '<stop offset="100%" stop-color="#1599f4" stop-opacity=".02"></stop>' +
+        '</linearGradient></defs>' + linhasGrade + marcacoesDia +
+        '<g class="agua-chart-series' + classeAnimacao + '">' +
+        '<path class="agua-chart-area" d="' + area + '"></path>' +
+        '<path class="agua-chart-line" d="' + linha + '"></path>' + marcadores +
+        '</g>';
+    chart.dataset.serieAgua = assinaturaDados;
+}
+
 function atualizarEstatisticasAgua() {
     const aguaDenuncias = denuncias.filter(d => isProblemaAgua(d.tipo));
     const regioes = [...new Set(
@@ -438,9 +516,15 @@ function atualizarEstatisticasAgua() {
     }
 
     const totalAgua = aguaDenuncias.length;
+    const registrosOrdenados = aguaDenuncias.slice().sort(function(a, b) {
+        return (converterDataRelato(a.data)?.getTime() || 0) -
+            (converterDataRelato(b.data)?.getTime() || 0);
+    });
     const ultimoRegistro = totalAgua > 0
-        ? aguaDenuncias[aguaDenuncias.length - 1].data || "--"
+        ? registrosOrdenados[registrosOrdenados.length - 1].data || "--"
         : "--";
+
+    renderizarGraficoAgua(aguaDenuncias);
 
     if (regiaoEl) {
         regiaoEl.textContent = formatarNumero(regioes.length || 0);
